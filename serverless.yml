@@ -1,0 +1,51 @@
+
+service: backlog2github
+
+plugins:
+  - serverless-offline
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-northeast-1
+  environment:
+    GITHUB_OWNER: ${ssm:GITHUB_OWNER}
+    GITHUB_REPO: ${ssm:GITHUB_REPO}
+    GITHUB_ACCESS_TOKEN: ${ssm:GITHUB_ACCESS_TOKEN}
+  resourcePolicy:
+    - Effect: Allow
+      Principal: "*"
+      Action: execute-api:Invoke
+      Resource:
+        - execute-api:/*/*/*
+      Condition:
+        IpAddress:
+          # Backlogがwebhook用に公開しているIPアドレス
+          # https://support-ja.backlog.com/hc/ja/articles/360035645534
+          aws:SourceIp:
+            - "54.64.128.240"
+            - "54.178.233.194"
+            - "13.112.1.142"
+            - "13.112.147.36"
+            - "54.238.175.47"
+            - "54.168.25.33"
+            - "52.192.156.153"
+            - "54.178.230.204"
+            - "52.197.88.78"
+            - "13.112.137.175"
+            - "34.211.15.3"
+            - "35.160.57.23"
+            - "54.68.48.106"
+            - "52.88.47.69"
+            - "52.68.247.253"
+            - "18.182.251.152"
+
+functions:
+  backlog2github:
+    handler: handler.create
+    events:
+      - http:
+          path: issues
+          method: post
