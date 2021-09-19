@@ -4,8 +4,6 @@ const { Octokit } = require("@octokit/rest");
 const octokit = new Octokit({ auth: process.env.GITHUB_ACCESS_TOKEN });
 
 module.exports.create = async event => {
-  console.log(process.env)
-
   const body = JSON.parse(event.body);
 
   const result = await createIssue(
