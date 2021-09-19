@@ -19,7 +19,7 @@ npm install
 ```
 
 ## Setting
-Create an IAM with administrator privileges for serverless.(Adjust as needed)
+Create an IAM with administrator privileges for serverless (Adjust as needed).   
 Add the following variables to the AWS parameter store.
 - GITHUB_OWNER
 - GITHUB_REPO
