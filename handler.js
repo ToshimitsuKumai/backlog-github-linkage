@@ -14,8 +14,9 @@ module.exports.create = async event => {
   return {
     statusCode: result.status,
     body: JSON.stringify({
-      message: 'Issue created!!',
-      body: result,
+      message: (result.status == 201)
+        ? "issue created."
+        : result
     },
       null,
       2
